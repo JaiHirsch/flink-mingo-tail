@@ -1,0 +1,22 @@
+
+// Apply the java plugin to add support for Java
+apply plugin: 'java'
+
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+	compile 'org.apache.flink:flink-java:1.0.2-hadoop1'
+	compile 'org.apache.flink:flink-streaming-java_2.10:1.0.2-hadoop1'
+	compile 'org.apache.flink:flink-clients_2.10:1.0.2-hadoop1'
+	compile 'org.mongodb:mongodb-driver-reactivestreams:1.2.0'
+	compile 'io.reactivex:rxjava-reactive-streams:1.0.1'
+	compile 'io.reactivex:rxjava:1.1.1'
+	compile 'org.mongodb:mongodb-driver:3.2.2'
+	
+    compile 'org.slf4j:slf4j-api:1.7.12'
+    
+    testCompile 'junit:junit:4.12'
+}
