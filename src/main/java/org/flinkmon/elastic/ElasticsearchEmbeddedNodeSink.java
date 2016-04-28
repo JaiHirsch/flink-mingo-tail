@@ -22,6 +22,7 @@ package org.flinkmon.elastic;
 
  */
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,8 +34,9 @@ import org.bson.Document;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.client.Requests;
 
-public class ElasticsearchEmbeddedNodeSink {
+public class ElasticsearchEmbeddedNodeSink implements Serializable{
 
+   private static final long serialVersionUID = -5520604513806975745L;
    private final String clusterName;
 
    public ElasticsearchEmbeddedNodeSink(String clusterName) {
