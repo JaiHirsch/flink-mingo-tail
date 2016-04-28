@@ -8,11 +8,12 @@ killall monogs
 echo "removing data files"
 rm -rf /data/config
 rm -rf /data/shard*
+rm -rf /data/timedb
 # start a replica set and tell it that it will be a shord0
 mkdir -p /data/shard0/rs0 /data/shard0/rs1 /data/shard0/rs2 /data/timedb
 
 # launch the time server
-mongod  --logpath "timedb.log" --dbpath /data/timedb --port 27021 --fork  --smallfiles
+#mongod  --logpath "timedb.log" --dbpath /data/timedb --port 27021 --fork  --smallfiles
 
 # launch replSet s0
 mongod --replSet s0 --logpath "s0-r0.log" --dbpath /data/shard0/rs0 --port 37017 --fork --shardsvr --smallfiles
@@ -71,4 +72,6 @@ db.adminCommand( { addshard : "s1/"+"localhost:47017" } );
 db.adminCommand( { addshard : "s2/"+"localhost:57017" } );
 db.adminCommand({enableSharding: "test"})
 db.adminCommand({shardCollection: "test.grades", key: {student_id:1}});
+db.adminCommand({enableSharding: "time_d"})
+db.adminCommand({shardCollection: "time_d.repl_time", key: {host:1}});
 EOF
