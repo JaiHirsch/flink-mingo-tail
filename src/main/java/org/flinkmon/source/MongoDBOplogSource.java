@@ -1,5 +1,27 @@
 package org.flinkmon.source;
 
+/**
+ * 
+ This file is part of flink-mongo-tail.
+
+ flink-mongo-tail is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ flink-mongo-tail is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with flink-mongo-tail.  If not, see <http://www.gnu.org/licenses/>.
+
+ @Author Jai Hirsch
+ @github https://github.com/JaiHirsch/flink-mingo-tail
+
+ */
+
 import static com.mongodb.client.model.Filters.and;
 import static com.mongodb.client.model.Filters.exists;
 import static com.mongodb.client.model.Filters.gt;
@@ -36,9 +58,6 @@ import com.mongodb.reactivestreams.client.FindPublisher;
 
 public class MongoDBOplogSource extends RichSourceFunction<Document> {
 
-   /**
-    * 
-    */
    private static final long serialVersionUID = 1140284841495470127L;
    private volatile boolean isRunning = true;
    private BlockingQueue<Document> opsQueue = new ArrayBlockingQueue<Document>(128);
@@ -73,19 +92,16 @@ public class MongoDBOplogSource extends RichSourceFunction<Document> {
 
    private void bindPublisherToObservable(Entry<String, FindPublisher<Document>> publisher,
          ExecutorService executor, MongoCollection<Document> tsCollection) {
-      RxReactiveStreams
-            .toObservable(publisher.getValue())
-            .subscribeOn(Schedulers.from(executor))
-            .subscribe(
-                  t -> {
-                     try {
+      RxReactiveStreams.toObservable(publisher.getValue()).subscribeOn(Schedulers.from(executor))
+            .subscribe(t -> {
+               try {
 
-                        putOperationOnOpsQueue(publisher, tsCollection, t);
+                  putOperationOnOpsQueue(publisher, tsCollection, t);
 
-                     } catch (InterruptedException e) {
-                        e.printStackTrace();
-                     }
-                  });
+               } catch (InterruptedException e) {
+                  e.printStackTrace();
+               }
+            });
    }
 
    private void putOperationOnOpsQueue(Entry<String, FindPublisher<Document>> publisher,
@@ -95,8 +111,9 @@ public class MongoDBOplogSource extends RichSourceFunction<Document> {
       documentCounter.putIfAbsent(opKey, new AtomicInteger(0));
       int opCounter = documentCounter.get(opKey).getAndIncrement();
       String host = publisher.getKey();
-      tsCollection.replaceOne(new Document("host", host), new Document("host",
-            host).append("ts", lastTimeStamp), (new UpdateOptions()).upsert(true));
+      tsCollection.replaceOne(new Document("host", host),
+            new Document("host", host).append("ts", lastTimeStamp),
+            (new UpdateOptions()).upsert(true));
       if (opCounter == 2) {
 
          opsQueue.put(t);

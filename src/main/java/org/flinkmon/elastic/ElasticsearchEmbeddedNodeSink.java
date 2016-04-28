@@ -1,5 +1,27 @@
 package org.flinkmon.elastic;
 
+/**
+
+ This file is part of flink-mongo-tail.
+
+ flink-mongo-tail is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ flink-mongo-tail is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with flink-mongo-tail.  If not, see <http://www.gnu.org/licenses/>.
+
+ @Author Jai Hirsch
+ @github https://github.com/JaiHirsch/flink-mingo-tail
+
+ */
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,15 +34,15 @@ import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.client.Requests;
 
 public class ElasticsearchEmbeddedNodeSink {
-   
+
    private final String clusterName;
 
    public ElasticsearchEmbeddedNodeSink(String clusterName) {
       this.clusterName = clusterName;
-      
+
    }
 
-   public  ElasticsearchSink<Document> getElasticSink() {
+   public ElasticsearchSink<Document> getElasticSink() {
       Map<String, String> config = Maps.newHashMap();
       config.put("bulk.flush.max.actions", "1");
       config.put("cluster.name", clusterName);

@@ -1,5 +1,27 @@
 package org.flinkmon.mongo.conn;
 
+/**
+ * 
+ This file is part of flink-mongo-tail.
+
+ flink-mongo-tail is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ flink-mongo-tail is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with flink-mongo-tail.  If not, see <http://www.gnu.org/licenses/>.
+
+ @Author Jai Hirsch
+ @github https://github.com/JaiHirsch/flink-mingo-tail
+
+ */
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -20,7 +42,8 @@ public class ShardSetFinder implements Closeable {
    private List<MongoClientWrapper> mongoClients;
 
    public Map<String, List<MongoClientWrapper>> findShardSets(MongoClient mongoS) {
-      // TODO figure out how to do this with the new driver syntax. Does not appear to support sisterDB
+      // TODO figure out how to do this with the new driver syntax. Does not
+      // appear to support sisterDB
       DBCursor find = mongoS.getDB("admin").getSisterDB("config").getCollection("shards").find();
       Map<String, List<MongoClientWrapper>> shardSets = new HashMap<>();
       while (find.hasNext()) {
