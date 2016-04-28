@@ -2,3 +2,10 @@
 /build/
 /.project
 /.classpath
+/.gradle/
+/.settings/
+*.class
+*.jar
+*.war
+*.ear
+hs_err_pid*
