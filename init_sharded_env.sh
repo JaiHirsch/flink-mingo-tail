@@ -73,5 +73,5 @@ db.adminCommand( { addshard : "s2/"+"localhost:57017" } );
 db.adminCommand({enableSharding: "test"})
 db.adminCommand({shardCollection: "test.grades", key: {student_id:1}});
 db.adminCommand({enableSharding: "time_d"})
-db.adminCommand({shardCollection: "time_d.repl_time", key: {host:1}});
+db.adminCommand({shardCollection: "time_d.repl_time", key: {_id:1}});
 EOF
