@@ -11,14 +11,9 @@ dependencies {
 	compile 'org.apache.flink:flink-java:1.0.2-hadoop1'
 	compile 'org.apache.flink:flink-streaming-java_2.10:1.0.2-hadoop1'
 	compile 'org.apache.flink:flink-clients_2.10:1.0.2-hadoop1'
-	compile 'org.apache.flink:flink-connector-elasticsearch_2.10:1.0.2-hadoop1'
+	compile 'org.apache.flink:flink-connector-elasticsearch:0.10.2-hadoop1'
+	
 	compile 'net.java.dev.jna:jna:4.1.0'
-//	 {
-//		exclude module: 'elasticsearch' 
-//	}
-	
-//	compile 'org.elasticsearch:elasticsearch:2.3.2'
-	
 	
 	compile 'org.mongodb:mongodb-driver-reactivestreams:1.2.0'
 	compile 'io.reactivex:rxjava-reactive-streams:1.0.1'
